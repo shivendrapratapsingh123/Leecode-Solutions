@@ -7,31 +7,35 @@ using namespace std;
 
 // } Driver Code Ends
 //User function Template for C++
+ // it is the modified language of minimum plateform problem 
+ // here we are only interested in end of any meeting and start of any meeting 
 
 class Solution {
   public:
-    int minLaptops(int n, int arr[], int dep[]) {
-        sort(arr,arr+n);
-       sort(dep,dep+n);
+    int minLaptops(int N, int start[], int end[]) {
        
-       int plat_needed =1;
+       int laptopRequired = 1;
        int result = 1;
-       int i =0;
-       int j=1;
-       while(i<n&&j<n)
+       int i =0; // i points to end of any meeting 
+       int j = 1; // j points to start of any meeting 
+       sort(start, start+N);
+       sort(end, end+N);
+       while(i<N && j<N)
        {
-           if(arr[j]<dep[i])
+           if(start[j] < end[i])
            {
-               plat_needed++;
+               laptopRequired++;
                j++;
            }
-           else if(arr[j]>=dep[i])
+           else
            {
-               plat_needed--;
+               laptopRequired--;
                i++;
            }
-           if(plat_needed > result)
-           result = plat_needed;
+           if(laptopRequired > result)
+           {
+               result = laptopRequired;
+           }
        }
        return result;
     }
