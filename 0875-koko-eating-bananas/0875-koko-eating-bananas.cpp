@@ -1,4 +1,4 @@
-// koko will eat some banana (let as max as possible) that can be eating within given hours 
+// koko will eat some banana (let as max as possible) that can be eaten within given hours 
  //then try to minimise these bananas  till low <= high and answer is obvious 
 
 class Solution {
