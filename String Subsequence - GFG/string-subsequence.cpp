@@ -9,23 +9,35 @@ using namespace std;
 
 class Solution{
 public:
- int solve(string &str, string &pat,int n, int m)
- {
-     if((n == 0 && m == 0 ) || m == 0)
-     return 1;
-     if(n == 0)
-     return 0;
-     if(str[n-1] == pat[m-1]){
-         return solve(str,pat, n-1, m - 1) + solve(str,pat,n-1, m);
-     }
-     else{
-         return solve(str,pat,n-1,m);
-     }
- }
-    int countWays(string S1, string S2){
-        int n = S1.size();
-        int m = S2.size();
-        return solve(S1,S2,n, m);
+    int countWays(string str, string pat){
+       int n = str.size();
+      int m = pat.size();
+  vector<vector<int>>dp(m+1,vector<int>(n+1,0));
+ //if string is empty then no matching
+  for(int i = 0;i<=m;i++)
+  {
+    dp[i][0] = 0;
+  }
+  // if pattern empty then always matching 
+  for(int i = 0;i<=n;i++)
+  {
+    dp[0][i] = 1;
+  }
+  //according to recurrance relation
+  for(int i  = 1;i<=m;i++)
+  {
+    for(int j = 1;j<=n;j++)
+    {
+        if(pat[i-1] == str[j-1])
+        {
+          dp[i][j] = dp[i-1][j-1] + dp[i][j-1];
+        }
+        else{
+            dp[i][j]  = dp[i][j-1];
+        }
+    }
+  }
+   return dp[m][n];
     }
 };
 
