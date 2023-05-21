@@ -8,26 +8,43 @@ class Solution
 {
     public:
     
-     int solve(int W, int wt[], int val[], int n,vector<vector<int>>&memo){
-         if(n == 0)
-         {
-             if(wt[n] <= W)
-              return val[0];
-              return 0;
-         }
-         if(memo[n][W] != -1)
-          return memo[n][W];
-         int nottake = solve(W,wt,val,n-1,memo);
-         int take = INT_MIN;
-         if(wt[n] <= W)
-         take = val[n] + solve(W-wt[n],wt,val,n-1,memo);
-         return memo[n][W]  = max(take,nottake);
-     }
-    
+    //  int solve(int W, int wt[], int val[], int n,vector<vector<int>>&memo){
+    //      if(n == 0)
+    //      {
+    //          if(wt[0] <= W)
+    //           return val[0];
+    //           return 0;
+    //      }
+    //      if(memo[n][W] != -1)
+    //       return memo[n][W];
+    //      int nottake = solve(W,wt,val,n-1,memo);
+    //      int take = INT_MIN;
+    //      if(wt[n] <= W)
+    //      take = val[n] + solve(W-wt[n],wt,val,n-1,memo);
+    //      return memo[n][W]  = max(take,nottake);
+    //  }
+    //tabulation
+    //space optimisation
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-        vector<vector<int>>memo(n,vector<int>(W+1,-1));
-       return solve(W,wt,val,n-1,memo);
+         vector<int>prev(W+1,0),curr(W+1,0);
+        for(int w = 0;w<=W;w++)
+        {
+            if(wt[0] <= w)
+            prev[w] = val[0];
+        }
+        for(int ind = 1;ind < n; ind++)
+        {
+            for(int w = 0; w<= W;w++)
+            {
+               curr[w] = prev[w];
+               if(wt[ind] <= w)
+               curr[w] = max(curr[w], val[ind] + prev[w - wt[ind]]);
+            }
+            prev = curr;
+        }
+        
+       return prev[W];
     }
 };
 
