@@ -34,16 +34,18 @@ class Solution{
   
   int carAssembly(vector<vector<int>>& a, vector<vector<int>>& T, vector<int>& e, vector<int>& x){
       int n = a[0].size();
-      vector<vector<int>>dp(n,vector<int>(2,0));
+     // vector<vector<int>>dp(n,vector<int>(2,0));
+      vector<int>prev(2,0),curr(2,0);
       //start from any line and take minimum of them
-      dp[0][0] = a[0][0] + e[0];
-      dp[0][1] = a[1][0] + e[1];
+      prev[0] = a[0][0] + e[0];
+      prev[1] = a[1][0] + e[1];
       for(int ind = 1;ind<n;ind++)
       {
-          dp[ind][0] = a[0][ind] + min(dp[ind-1][0],T[1][ind]+dp[ind-1][1]);
-          dp[ind][1] = a[1][ind] + min(dp[ind-1][1],T[0][ind] + dp[ind-1][0]);
+          curr[0] = a[0][ind] + min(prev[0],T[1][ind]+prev[1]);
+          curr[1] = a[1][ind] + min(prev[1],T[0][ind] + prev[0]);
+          prev = curr;
       }
-      return min(dp[n-1][0]+x[0],dp[n-1][1]+x[1]);
+      return min(prev[0]+x[0],prev[1]+x[1]);
   }
 };
 
