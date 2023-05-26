@@ -31,7 +31,7 @@ class Solution{
 //           return dp[ind][line] =  a[1][ind] + min(solve(ind-1,1,a,T,e,dp),T[0][ind] + solve(ind-1,0,a,T,e,dp));
 //       }
 //   }
-  
+  //space optimisation
   int carAssembly(vector<vector<int>>& a, vector<vector<int>>& T, vector<int>& e, vector<int>& x){
       int n = a[0].size();
      // vector<vector<int>>dp(n,vector<int>(2,0));
