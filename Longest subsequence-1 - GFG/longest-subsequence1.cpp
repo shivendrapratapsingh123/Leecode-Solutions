@@ -10,30 +10,51 @@ using namespace std;
 class Solution{
 public:
    
-   int solve(int ind, int prev, int n, int arr[]){
-       if(ind == n)
-       {
-           return 0;
-       }
+//   int solve(int ind, int prev, int n, int arr[]){
+//       if(ind == n)
+//       {
+//           return 0;
+//       }
        
-       int notTake = solve(ind+1,prev,n,arr);
-       int take  = 0;
-       if(prev == -1){
-           take = solve(ind+1,ind,n,arr); 
-       }
+//       int notTake = solve(ind+1,prev,n,arr);
+//       int take  = 0;
+//       if(prev == -1){
+//           take = solve(ind+1,ind,n,arr); 
+//       }
       
-       else if(abs(arr[prev] - arr[ind]) == 1)
-       {
+//       else if(abs(arr[prev] - arr[ind]) == 1)
+//       {
           
-           take = 1 + solve(ind+1,ind,n,arr);
+//           take = 1 + solve(ind+1,ind,n,arr);
            
-       }
-       return max(notTake,take);
-       }
+//       }
+//       return max(notTake,take);
+//       }
    
-    int longestSubsequence(int N, int A[])
+    // space optimised tabulation 
+    int longestSubsequence(int n, int arr[])
     {
-       return solve(0,-1,N,A)+1;
+         vector<int>previous(n+1,0),current(n+1,0);
+        
+        //  for(int prev = 0;prev <=n;prev++)
+        //  dp[n][prev] = 0;
+         for(int ind = n-1;ind>=0;ind--)
+         {
+            for(int prev = ind-1;prev>=-1;prev--)
+            {
+                int notTake = previous[prev+1];
+                int take = 0;
+                if(prev == -1)
+                take = previous[ind+1];
+                else if(abs(arr[ind] - arr[prev]) == 1)
+                take =  1 + previous[ind+1];
+                current[prev+1] = max(take , notTake);
+            }
+            previous = current;
+         }
+
+        return current[0]+1;
+       //return solve(0,-1,N,A)+1;
     }
 };
 
