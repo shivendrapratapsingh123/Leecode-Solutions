@@ -19,20 +19,26 @@ class Solution{
     //     return dp[ind] = max(notTake, take);
     // }
     
-    // tabulation 
+    // tabulation  space optimisation 
     int maxSumPairWithDifferenceLessThanK(int arr[], int n, int k)
     {
         sort(arr,arr+n);
         vector<int>dp(n,0);
+        int prev = 0;
+        int prev1 = 0;
+        int curr = 0;
+        
         for(int i = 1;i<n;i++)
         {
-            int notTake = dp[i-1];
+            int notTake = prev1;
             int take = 0;
             if(arr[i]-arr[i-1] < k)
-            take = arr[i] + arr[i-1] + dp[i-2];
-            dp[i] = max(notTake , take );
+            take = arr[i] + arr[i-1] + (i-2>=0 ?  prev : 0);
+            curr = max(notTake , take );
+            prev = prev1;
+            prev1 = curr;
         }
-         return dp[n-1];
+         return prev1;
         //return solve(n-1,k,arr,dp);
     }
 };
