@@ -23,7 +23,7 @@ class Solution{
            }
             l = r + 1;
             r = fardest;
-            if(r != n-1 && l > r)
+            if( l > r)
             return -1;
             res += 1;
        } 
