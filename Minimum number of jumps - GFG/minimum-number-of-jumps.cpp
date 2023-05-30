@@ -23,7 +23,7 @@ class Solution{
            }
             l = r + 1;
             r = fardest;
-            if( l > r)
+            if( l > r)   //condition for not reachability
             return -1;
             res += 1;
        } 
