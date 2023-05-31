@@ -15,27 +15,36 @@ class Solution
 {
 public:
 
-    int solve(int ind, string& s, unordered_map<string,int>&mp,vector<int>&dp)
-    {
-        if(ind >= s.size())
-        return true;
-        if(dp[ind] != -1)
-        return dp[ind];
-        for(int k = 1; k <= s.size()-ind;k++)
-        {
-            if(mp.find(s.substr(ind,k))!= mp.end() && solve(ind+k,s,mp,dp))
-            return dp[ind] = true;
-        }
-        return dp[ind] = false;
-    }
-
+    // int solve(int ind, string& s, unordered_map<string,int>&mp,vector<int>&dp)
+    // {
+    //     if(ind >= s.size())
+    //     return true;
+    //     if(dp[ind] != -1)
+    //     return dp[ind];
+    //     for(int k = 1; k <= s.size()-ind;k++)
+    //     {
+    //         if(mp.find(s.substr(ind,k))!= mp.end() && solve(ind+k,s,mp,dp))
+    //         return dp[ind] = true;
+    //     }
+    //     return dp[ind] = false;
+    // }
+// tabulation 
     int wordBreak(string A, vector<string> &B) {
-         
+         int n = A.size();
          unordered_map<string,int>mp;
          for(int i = 0;i<B.size();i++)
          mp[B[i]]++;
-         vector<int>dp(A.size()+1,-1);
-         return solve(0,A,mp,dp);
+         vector<bool>dp(A.size()+1,false);
+         dp[n] = true;
+         for(int ind = n-1;ind>=0;ind--)
+         {
+             for(int k = 1;k<=n-ind;k++)
+             {
+                 if(mp.find(A.substr(ind,k))!= mp.end() && dp[ind+k])
+                 dp[ind] = true;
+             }
+         }
+         return dp[0];
     }
 };
 
