@@ -13,9 +13,8 @@ public:
 
     string longestPalindrome(string s){
         int n = s.size();
-        string str = "";
         if(n == 1)
-        return str +=s[0];
+        return s.substr(0,1);
         int start = 0;
         int length  = 1;
       vector<vector<int>>dp(n,vector<int>(n,0));  
