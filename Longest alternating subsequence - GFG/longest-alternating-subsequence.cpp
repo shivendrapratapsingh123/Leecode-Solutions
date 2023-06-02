@@ -8,10 +8,10 @@ class Solution {
 	// space optimisation 
 		int AlternatingaMaxLength(vector<int>&nums){
 		    int n = nums.size();
-		   vector<vector<int>>dp(n,vector<int>(2,0));
+		  // vector<vector<int>>dp(n,vector<int>(2,0));
 		   vector<int>curr(2,0);
 		  curr[0] = curr[1] = 1;
-		  for(int i = n-1;i > 0 ;i--)
+		  for(int i = 1;i<n;i++)
 		  {
 		          if(nums[i] > nums[i-1])
 		          {
