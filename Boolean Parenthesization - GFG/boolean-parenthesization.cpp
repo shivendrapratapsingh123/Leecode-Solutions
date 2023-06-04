@@ -73,10 +73,65 @@ public:
       return dp[i][j][isTrue] =  ways%mod;
     }
     
+    // tabulation 
+    int countWays(int N, string s){
+     //vector<vector<vector<int>>>dp(N,vector<vector<int>>(N,vector<int>(2,-1)));
+     vector<vector<vector<int>>>dp(N,vector<vector<int>>(N,vector<int>(2,0)));
+     for(int i = 0;i<N;i++)
+     {
+        dp[i][i][1]  = s[i] == 'T';
+        dp[i][i][0]  = s[i] == 'F';
+     }
     
-    int countWays(int N, string S){
-     vector<vector<vector<int>>>dp(N,vector<vector<int>>(N,vector<int>(2,-1)));
-     return solve(0,N-1,1,S,dp);
+     for(int i = N-1;i >= 0;i--)
+     {
+         for(int j = i+1;j<N;j++)
+         {
+              for(int isTrue = 0;isTrue <= 1; isTrue++){
+                  int ways = 0;
+                  for(int ind = i+1; ind <=j-1;ind += 2) {
+                      int lT = dp[i][ind-1][1];
+                      int lF = dp[i][ind-1][0];
+                      int rT = dp[ind+1][j][1];
+                      int rF = dp[ind+1][j][0];
+                      if(s[ind] == '&'){
+             
+             if(isTrue)
+             {
+                 ways = (ways%mod +  (lT*rT)%mod)%mod;
+             }
+             else{
+                 ways = (ways%mod +  (lT*rF)%mod + (lF*rT)%mod + (lF*rF)%mod)%mod;
+             }
+         }
+         else if(s[ind] == '|')
+        {
+            if(isTrue)
+            {
+                ways =( ways%mod + (lT*rF)%mod + (lF*rT)%mod + (lT*rT)%mod)%mod;
+            }
+            else{
+                ways = (ways%mod + (lF*rF)%mod)%mod;
+            }
+          
+        }
+        else if(s[ind] == '^')
+        {
+            if(isTrue)
+            {
+                ways = (ways%mod +  (lT*rF)%mod + (lF*rT)%mod)%mod;
+            }
+            else{
+                ways = (ways%mod +  (lT*rT)%mod + (lF*rF)%mod)%mod;
+            }
+        }
+          
+      }
+        dp[i][j][isTrue] =  ways%mod;
+                  }
+              }
+         }
+     return dp[0][N-1][1];
     }
 };
 
