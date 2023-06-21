@@ -34,6 +34,7 @@ class DisjointSet
        if(rank[u] < rank[v])
        swap(u,v);
        parent[v] = u;
+       if(rank[u] == rank[v])
        rank[u]++;
    }
   
