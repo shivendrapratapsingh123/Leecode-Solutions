@@ -6,24 +6,25 @@ using namespace std;
 class Solution{
 public:
     int findMin(int arr[], int n){
-       
-       if(arr[0] < arr[1] && arr[0] < arr[n-1])
-       return arr[0];
-       if(arr[n-1] < arr[n-2] && arr[n-1] < arr[0])
-       return arr[n-1];
-       int l  = 0;
-       int r = n-1;
-       int mid;
-       while(l <= r){
-           mid = l + (r-l)/2;
-           if(arr[mid] < arr[mid-1] && arr[mid] < arr[mid+1])
-           return arr[mid];
-           else if(arr[mid] < arr[r])
-            r = mid - 1;
-            else
-            l = mid + 1;
-       }
-       return -1;
+        //minimum element is first or last element then to avoid overflow applying following rule 
+        int low = 0;
+        int high = n-1;
+        int mid,prev,next;
+        while( low <= high){
+            mid  = low + (high - low)/2;
+            prev = (mid - 1 + n)%n;
+            next = (mid + 1 )%n;
+            if(arr[mid] < arr[prev] && arr[mid ] < arr[next])
+            return arr[mid];
+            else if(arr[mid] < arr[high])
+            {
+                high = mid - 1;
+            }
+            else {
+                low = mid + 1;
+            }
+        }
+        return -1;
     }
 };
 
