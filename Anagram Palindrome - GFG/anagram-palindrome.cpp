@@ -33,7 +33,7 @@ int isPossible (string S)
         if(it.second%2 == 1)
         cnt++;
     }
-    if((S.size() %2 == 1 && cnt == 1) || S.size() %2 == 0 && cnt == 0)
+    if((S.size() %2 == 1 && cnt == 1) || (S.size() %2 == 0 && cnt == 0))
     return true;
     return false;
     
