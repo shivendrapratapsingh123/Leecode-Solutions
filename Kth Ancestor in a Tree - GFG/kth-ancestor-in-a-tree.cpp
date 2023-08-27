@@ -113,10 +113,10 @@ struct Node
 // your task is to complete this function
 int solve(Node* root, int& k, int node,int& res){
     if(root == NULL) return 0;
-    if(root->data == node) return 1;
+   
     int left = solve(root->left,k,node,res);
     int right = solve(root->right,k,node,res);
-    
+     if(root->data == node) return 1;
     if(left || right){
         k--;
         if(k == 0) 
