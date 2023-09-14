@@ -9,18 +9,20 @@ class Solution{
 	int mod = 1e9+7;
 	int perfectSum(int arr[], int n, int sum)
 	{
-	    vector<vector<int>>dp(n+1,vector<int>(sum+1,0));
+	    vector<int>prev(sum+1,0),curr(sum+1,0);
+	    
         //return solve(0,arr,n,sum,dp);
-        dp[n][0] = 1;
-        for(int i = n-1;i>= 0;i--){
+        prev[0] = 1;
+        for(int i = n-1;i >= 0; i--){
             for(int j = 0;j<=sum;j++){
-           dp[i][j] = dp[i+1][j];
-	     if(arr[i] <= j)
-	         dp[i][j]  = (dp[i][j]%mod + dp[i+1][j-arr[i]]%mod)%mod;
-	            dp[i][j] = (dp[i][j])%mod;
+                curr[j] = prev[j];
+	       if(arr[i] <= j)
+	           curr[j]  = (curr[j]%mod + prev[j-arr[i]]%mod)%mod;
+	            curr[j] = (curr[j])%mod;
             }
+            prev = curr;
         }
-        return dp[0][sum];
+        return curr[sum];
 	}
 	  
 };
