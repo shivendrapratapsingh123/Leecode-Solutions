@@ -7,22 +7,6 @@ class Solution{
 
 	public:
 	int mod = 1e9+7;
-	int solve(int ind, int arr[], int n, int sum,vector<vector<int>>&dp){
-	      if(ind >= n){
-	          if(sum == 0)
-	          return 1;
-	          return 0;
-	      }
-	      
-	      if(dp[ind][sum] != -1) return dp[ind][sum];
-	    int skip = solve(ind+1,arr,n,sum,dp);
-	    if(arr[ind] <= sum)
-	     skip  = (skip%mod + (solve(ind+1,arr,n,sum - arr[ind],dp))%mod)%mod;
-	     return dp[ind][sum] = (skip)%mod;
-	}
-	
-	
-	
 	int perfectSum(int arr[], int n, int sum)
 	{
 	    vector<vector<int>>dp(n+1,vector<int>(sum+1,0));
@@ -30,10 +14,10 @@ class Solution{
         dp[n][0] = 1;
         for(int i = n-1;i>= 0;i--){
             for(int j = 0;j<=sum;j++){
-           int skip = dp[i+1][j];
+           dp[i][j] = dp[i+1][j];
 	     if(arr[i] <= j)
-	         skip  = (skip%mod + dp[i+1][j-arr[i]]%mod)%mod;
-	            dp[i][j] = (skip)%mod;
+	         dp[i][j]  = (dp[i][j]%mod + dp[i+1][j-arr[i]]%mod)%mod;
+	            dp[i][j] = (dp[i][j])%mod;
             }
         }
         return dp[0][sum];
